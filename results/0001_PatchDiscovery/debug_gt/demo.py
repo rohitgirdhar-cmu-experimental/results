@@ -19,15 +19,15 @@ t = Table()
 r = TableRow(isHeader = True)
 r.addElement(Element('Sno'))
 r.addElement(Element('Top Patch'))
-r.addElement(Element('Retrieval Score'))
+r.addElement(Element('Retrieval Score (DCG@10)'))
 r.addElement(Element('Distinct Retrievals...'))
 t.addRow(r)
-for i in range(1, 120):
+for i in range(1, 121):
   with open('top_patches_text/' + str(i) + '.txt') as f:
     lines = f.read().splitlines()
   for j in range(len(lines)):
     line = lines[j]
-    r = TableRow(rno=i + 0.1 * j)
+    r = TableRow(rno=i + 0.01 * (j+1))
     temp = line.split(';')
     qbox = [float(el) for el in temp[1].split(',')]
     e = Element()
