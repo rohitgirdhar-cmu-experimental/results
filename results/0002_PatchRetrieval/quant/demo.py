@@ -5,6 +5,6 @@ from TableWriter import TableWriter
 
 t = Table()
 t.readFromCSV('table.csv', scale=100)
-tw = TableWriter(t, 'out', makeChart = True)
+tw = TableWriter(t, 'out', makeChart = True, rowsPerPage=50)
 tw.write()
 
