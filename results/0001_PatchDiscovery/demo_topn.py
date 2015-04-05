@@ -29,17 +29,17 @@ for i in range(121, 238):
     with open('all_top_patches/' + m + '/' + str(i) + '.txt') as f:
       lines = f.read().splitlines()
     boxes = []
-    for line in lines[:1]:
+    for line in lines[:5]:
       temp = line.split(';')
-#      if float(temp[2]) < 1:
-#        break;
+      if float(temp[2]) < 0.5:
+        break;
       qbox = [float(el) for el in temp[1].split(',')]
       boxes.append(qbox)
     e = Element()
     e.addImg(os.path.join('..', corpus, temp[0]), bboxes=boxes)
-    e.addTxt('score: ' + temp[2])
+#    e.addTxt('score: ' + temp[2])
     r.addElement(e)
   t.addRow(r)
-tw = TableWriter(t, 'out')
+tw = TableWriter(t, 'out_topn')
 tw.write()
 

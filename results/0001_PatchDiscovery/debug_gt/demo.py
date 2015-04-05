@@ -23,6 +23,7 @@ r.addElement(Element('Retrieval Score (DCG@10)'))
 r.addElement(Element('Distinct Retrievals...'))
 t.addRow(r)
 for i in range(1, 121):
+  #with open('2_top_patches_text_removedSmall/' + str(i) + '.txt') as f:
   with open('top_patches_text/' + str(i) + '.txt') as f:
     lines = f.read().splitlines()
   for j in range(len(lines)):
