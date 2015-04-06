@@ -14,7 +14,7 @@ def readRetrievals(fpath, DIV = 1):
   imids = []
   allmatches = []
   for line in lines:
-    imgid = int(line.split(';')[0])
+    imgid = [int(el) for el in line.split(';')[0].split(',')]
     imids.append(imgid)
     matches = line.split(';')[1].strip()
     matches = [(int(m.split(':')[0])/DIV, float(m.split(':')[1]), [int(el) for el in m.split(':')[2].split(',')]) for m in matches.split()]
@@ -22,7 +22,7 @@ def readRetrievals(fpath, DIV = 1):
   return (imids, allmatches)
 
 t = Table()
-methods = ['gt.txt', 'full.txt', 'svr_rbf_10000.txt', 'svr_linear_FullData_liblinear_pool5.txt']
+methods = ['gt.txt', 'full.txt', 'svr_rbf_10000.txt', 'svr_linear_FullData_liblinear__1.txt', 'svr_linear_FullData_liblinear__5.txt']
 imgspath = '../../../dataset/PALn1KHayesDistractors/corpus/'
 imgslistpath = '../../../dataset/ImgsList.txt'
 selboxpath = 'selsearch_boxes/'
@@ -55,9 +55,11 @@ for i in range(117):
     matches = methodout[j][1]
     r = TableRow(rno = i + 0.01 * j)
     e = Element()
-    bbox = readBbox(imids[i])
-    bboxes = [bbox]
-    imname = imgslist[imids[i]/10000]
+    
+    bboxes = []
+    for qbox in imids[i]:
+      bboxes.append(readBbox(qbox))
+    imname = imgslist[imids[i][0]/10000]
     if method == 'full.txt':
       bboxes = None
     e.addImg(os.path.join('..', imgspath, imname), bboxes=bboxes)
